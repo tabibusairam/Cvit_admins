@@ -1,0 +1,46 @@
+- hosts: atom-worker
+  gather_facts: no
+  tasks:
+      - name: Create sources directory
+        file: path=/opt/sources state=directory owner=cvit group=cvit mode=0755
+        become: yes
+      - name: Create packages directory
+        file: path=/opt/packages state=directory owner=root group=root mode=0755
+        become: yes
+      - name: delete pre-existing
+        file: path=/opt/sources/{{item}} state=absent
+        with_items:
+            - modules-4.1.3
+      - name: Unpack source
+        unarchive: src={{item}} dest=/opt/sources/ 
+        with_items:
+            - modules-4.1.3.tar.bz2
+
+      - name: Install prerequisites
+        become: yes
+        apt:
+            name: "{{ packages }}"
+        vars:
+            packages:
+                - tclx8.4
+                - tclx8.4-dev
+                - tcl8.4
+                - tcl8.4-dev
+                - tcl8.5
+                - tcl8.5-dev
+                - libtcl8.4
+                - libtcl8.5
+      - name: Setup
+        shell: cd /opt/sources/modules-4.1.3/ && ./configure && make 
+      
+      - name: Make install, if the above works
+        shell: cd /opt/sources/modules-4.1.3/ && make install 
+        become: yes
+
+
+      - name: Set symlinks
+        become: yes
+        file: src=/usr/local/Modules/init/profile.{{item}} dest=/etc/profile.d/modules.{{item}} state=link
+        with_items:
+            - csh
+            - sh

@@ -1,0 +1,28 @@
+[atom-head]
+atom        ansible_host=10.4.16.28
+
+[atom-worker]
+node2       ansible_host=10.4.16.11
+node3       ansible_host=10.4.16.12
+node4       ansible_host=10.4.16.13
+node6       ansible_host=10.4.16.15
+node7       ansible_host=10.4.16.16
+node9       ansible_host=10.4.16.18
+node10      ansible_host=10.4.16.19
+node11      ansible_host=10.4.16.20
+node12      ansible_host=10.4.16.21
+node13      ansible_host=10.4.16.22
+node14      ansible_host=10.4.16.23
+node15      ansible_host=10.4.16.29
+
+[atom-gpu]
+node10      ansible_host=10.4.16.19
+node14      ansible_host=10.4.16.23
+node15      ansible_host=10.4.16.29
+
+[cosmos]
+quasar      ansible_host=10.4.16.67
+supernova   ansible_host=10.4.16.68
+magnetar    ansible_host=10.4.16.69
+blazar      ansible_host=10.4.16.71
+fusor       ansible_host=10.2.16.95

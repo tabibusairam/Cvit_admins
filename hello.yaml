@@ -1,0 +1,30 @@
+# - hosts: atom-worker
+#   gather_facts: yes
+#   tasks:
+#     - name: running the module command
+#       shell: module avail
+#     - debug: var=vagrant.stdout_lines
+
+
+
+
+
+
+#ansible cosmos -m shell -a "bash -l -c \"module avail\"" -u cvit -k
+
+
+
+- hosts: atom-worker
+  gather_facts: yes
+  tasks:
+      - name: Unpack source
+        unarchive: src={{item}} dest=/opt/sources/ 
+        with_items:
+            - Python-3.6.6.tgz
+
+      - name: Setup
+        shell: cd /opt/sources/Python-3.6.6/ && ./configure && make
+
+      - name: Make install, if the above works
+        shell: cd /opt/sources/ython-3.6.6/ && make install 
+        become: yes
